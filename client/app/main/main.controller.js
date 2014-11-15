@@ -4,10 +4,20 @@ angular.module('csInterviewApp')
   .controller('MainCtrl', function($scope, $http, socket, coloredShapes) {
     $scope.newThingColorsAndShapes = [];
     $scope.awesomeThings = [];
+    $scope.charactersAndCounts = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+
+      socket.syncUpdates('thing', $scope.awesomeThings, function() {
+        $http.get('/api/characters').success(function(charactersAndCounts) {
+          $scope.charactersAndCounts = charactersAndCounts;
+        });
+      });
+    });
+
+    $http.get('/api/characters').success(function(charactersAndCounts) {
+      $scope.charactersAndCounts = charactersAndCounts;
     });
 
     $scope.addThing = function() {
@@ -15,11 +25,13 @@ angular.module('csInterviewApp')
         return;
       }
 
+      //Get colors and shapes to display to the user
       $scope.newThingColorsAndShapes = coloredShapes.colorsAndShapes($scope.newThing);
 
       $http.post('/api/things', {
-        name: $scope.newThing
+        name: $scope.newThing,
       });
+
       $scope.newThing = '';
     };
 

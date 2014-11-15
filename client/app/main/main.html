@@ -27,7 +27,25 @@
       </span>
     </p>
   </form>
-  <i ng-repeat="newThingColorAndShape in newThingColorsAndShapes" class="icon-{{newThingColorAndShape.shape}}" style="color:{{newThingColorAndShape.color}}"></i>
+</div>
+
+<section>
+<div class="container">
+  <div class="row">
+    <i ng-repeat="newThingColorAndShape in newThingColorsAndShapes" class="icon-{{newThingColorAndShape.shape}}" style="color:{{newThingColorAndShape.color}}"></i>
+  </div>
+</div>
+</section>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-1" ng-repeat="characterAndCount in charactersAndCounts">
+      <div class="btn btn-default">
+        <pre>`{{characterAndCount.character}}`</pre>
+        {{characterAndCount.count}}
+      </div> 
+    </div>
+  </div>
 </div>
 
 <footer class="footer">
